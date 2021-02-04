@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Uncomment and your base-package here: <context:component-scan base-package="org.springframework.samples.web"/> -->
+	
+	<context:annotation-config />
+	<context:component-scan base-package="com" />
+
+	<mvc:annotation-driven />
+	
+	<mvc:resources location="/WEB-INF/semantic/*" mapping="/semantic/*"/>
+	<mvc:resources location="/WEB-INF/semantic/themes/default/assets/fonts/*" mapping="/semantic/themes/default/assets/fonts/*"/>
+	<mvc:resources location="/WEB-INF/semantic/components/*" mapping="/semantic/components/*"/>
+	<mvc:resources location="/WEB-INF/js/jquery-ui-1.12.1/*" mapping="/js/jquery-ui-1.12.1/*"/>
+	
+	
+	<mvc:resources location="/WEB-INF/css/*" mapping="/css/*"/>
+	<mvc:resources location="/WEB-INF/fonts/*" mapping="/fonts/*"/>
+	<mvc:resources location="/WEB-INF/images/*" mapping="/images/*"/>
+	<mvc:resources location="/WEB-INF/images/avatar/*" mapping="/images/avatar/*"/>
+	<mvc:resources location="/WEB-INF/scripts/*" mapping="/scripts/*"/>
+	<mvc:resources location="/WEB-INF/styles/*" mapping="/styles/*"/>
+	<mvc:resources location="/WEB-INF/src/*" mapping="/src/*"/>
+	<mvc:resources location="/WEB-INF/js/*" mapping="/js/*"/>
+	<mvc:resources location="/webfold/**" mapping="/webfold/**"/>
+	<mvc:resources location="/WEB-INF/static/" mapping="/**" />
+	
+
+	<bean id="test" class="com.pixel.blog.serviceImpl.MenuLoader" lazy-init="false" init-method="loadMenu" scope="singleton"></bean>
+
+	<!-- view resolver -->
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json" />
+                <entry key="xml"  value="application/xml" />
+                <entry key="do"   value="text/html" />
+                <entry key="html"   value="text/html" />
+            </map>
+        </property>
+        <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="prefix" value="/WEB-INF/view/" />
+                    <property name="suffix" value=".jsp" />
+                    <property name="order"  value="2"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		 <!-- setting maximum upload size -->
+		<property name="maxUploadSize" value="1000000000000" />
+	</bean>
+	
+	
+	<bean id="dataSource" 
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+      <property name="url" value="jdbc:mysql://localhost:3306/pixel"/>
+      <property name="username" value="root"/>
+      <property name="password" value=""/>
+   </bean> 
+   
+   <!-- <bean id="dataSource" 
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+      <property name="url" value="jdbc:mysql://35.154.77.48:3306/pixel"/>
+      <property name="username" value="root"/>
+      <property name="password" value="root"/>
+   </bean> -->
+   
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+		<property name="dataSource" ref="dataSource"></property>  
+	</bean>  
+
+</beans>
