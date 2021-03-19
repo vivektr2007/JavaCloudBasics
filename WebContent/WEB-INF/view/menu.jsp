@@ -1,5 +1,5 @@
 <%@page import="java.util.Iterator"%>
-<%@page import="com.pixel.aws.model.MenuBean"%>
+<%@page import="com.pixel.model.MenuBean"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page import="com.pixel.blog.serviceImpl.MenuLoader"%>
